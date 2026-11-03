@@ -1,0 +1,589 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Deal Wallets Mockup</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@500;600&display=swap">
+<style>
+/* Layout: the DwellOS app (navy bar, deal page, Payments page) on the left; a demo rail on the right that
+   drives the story and shows what DwellOS and Verto do behind each click. Single light theme on purpose:
+   this is a picture of the product, which ships light. */
+:root{
+  --chrome:#0a1e3f;--chrome-ink-2:#c3cee0;--chrome-ink-3:#7f93b5;--chrome-line:#26406a;
+  --ink:#0a1e3f;--ink-2:#45566e;--ink-3:#5b6b82;
+  --ground:#f7f8fa;--surface:#ffffff;--sunk:#f1f3f7;
+  --line:#e7eaf0;--line-strong:#dfe3ea;--line-bold:#c9d1dc;
+  --accent:#2e6bff;--accent-hover:#1b4bd6;--accent-text:#1b4bd6;--accent-tint:#f4faff;--accent-line:#d6e6ff;
+  --warn-text:#8a5200;--warn-tint:#fdf4e7;--warn-line:#f0dfc2;
+  --good-text:#1f6b45;--good-tint:#eef8f2;--good-line:#cfe8d9;
+  --code-bg:#0f1b30;--code-ink:#d7e1f2;--code-dim:#7f93b5;--code-key:#9fc2ff;--code-str:#b5e3c4;
+  --sans:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --data:"Space Grotesk",ui-sans-serif,system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink-2);font:15px/1.5 var(--sans)}
+button{font:inherit}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.shell{display:grid;grid-template-columns:minmax(0,1fr) 380px;min-height:100%}
+body.clean .shell{grid-template-columns:minmax(0,1fr)}
+body.clean .rail{display:none}
+@media (max-width:1100px){.shell{grid-template-columns:minmax(0,1fr)}}
+
+/* app chrome */
+.bar[hidden]{display:none}
+.bar{background:var(--chrome);color:#fff;display:flex;flex-wrap:wrap;align-items:center;gap:6px 22px;padding-block:0;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));min-height:56px}
+.brand{font:600 17px var(--data);letter-spacing:.01em;display:flex;align-items:center;gap:8px}
+.brand i{width:22px;height:22px;border-radius:5px;background:#fff;display:inline-block;position:relative}
+.brand i::after{content:"";position:absolute;inset:6px;border-radius:2px;background:var(--chrome)}
+.proj{font-size:14px;color:var(--chrome-ink-2);border:1px solid var(--chrome-line);border-radius:4px;padding:4px 10px}
+.nav{display:flex;flex-wrap:wrap;gap:2px}
+.nav button{background:none;border:0;color:var(--chrome-ink-2);padding:17px 10px;font-size:14px;cursor:pointer;border-bottom:2px solid transparent}
+.nav button:hover{color:#fff}
+.nav button[aria-current="page"]{color:#fff;font-weight:600;border-bottom-color:#fff}
+.nav .new{font-size:10px;font-weight:600;letter-spacing:.08em;background:var(--accent);color:#fff;border-radius:2px;padding:1px 5px;margin-left:6px;vertical-align:2px}
+.page{padding-block:24px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:4px}
+.cap{font:600 11px var(--data);letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);margin:0}
+h1{margin:0;font:600 28px/1.2 var(--sans);color:var(--ink);text-wrap:balance}
+h2{margin:0;font-size:17px;font-weight:600;color:var(--ink)}
+.btn{height:38px;padding:0 14px;border:1px solid var(--line-strong);background:var(--surface);border-radius:4px;font-weight:500;font-size:14px;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.btn:hover{border-color:var(--line-bold)}
+.btn-p{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.btn-p:hover{background:var(--accent-hover);border-color:var(--accent-hover)}
+.btn-s{height:32px;font-size:13px;padding:0 10px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.tag{font-size:12px;font-weight:600;border-radius:2px;padding:1px 7px;border:1px solid;white-space:nowrap;display:inline-flex;align-items:center;gap:5px}
+.t-good{color:var(--good-text);background:var(--good-tint);border-color:var(--good-line)}
+.t-warn{color:var(--warn-text);background:var(--warn-tint);border-color:var(--warn-line)}
+.t-info{color:var(--accent-text);background:var(--accent-tint);border-color:var(--accent-line)}
+.t-mute{color:var(--ink-3);background:var(--sunk);border-color:var(--line)}
+.num{font-family:var(--data);font-variant-numeric:tabular-nums}
+.mono{font-family:var(--mono);font-size:13px}
+.flash{animation:flash 1.4s ease-out}
+@keyframes flash{0%{box-shadow:0 0 0 3px var(--accent-line);background:var(--accent-tint)}100%{box-shadow:0 0 0 0 transparent}}
+.spin{width:12px;height:12px;border-radius:50%;border:2px solid var(--warn-line);border-top-color:var(--warn-text);animation:spin .8s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.flash,.spin{animation:none}}
+
+/* deal header */
+.head{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+.avatar{width:56px;height:56px;border-radius:28px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font:600 18px var(--data);flex:none}
+.tabs{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--line-strong)}
+.tabs>span{padding:12px 4px;margin-right:24px;font-size:15px;color:var(--ink-2);border-bottom:2px solid transparent;margin-bottom:-1px;display:inline-flex;gap:8px;align-items:center}
+.tabs>.on{color:var(--ink);font-weight:600;border-bottom-color:var(--ink)}
+.n{align-self:center;line-height:18px;font-size:12px;font-weight:500;color:var(--ink-2);background:var(--sunk);border-radius:10px;padding:1px 8px}
+.cols{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start}
+.main{flex:999 1 560px;min-width:0;display:flex;flex-direction:column;gap:20px}
+.side{flex:1 1 300px;min-width:0;max-width:380px;display:flex;flex-direction:column;gap:20px}
+.sec{padding:20px;display:flex;flex-direction:column;gap:14px}
+.sec-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.sub{font-size:14px;color:var(--ink-3);margin:0}
+
+.checks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.checks li{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:12px 0;border-top:1px solid var(--line)}
+.checks li:first-child{border-top:0;padding-top:2px}
+.ck{width:24px;height:24px;border-radius:12px;flex:none;display:flex;align-items:center;justify-content:center}
+.ck.done{background:var(--ink)}
+.ck.todo{border:2px solid var(--line-bold)}
+.ck-body{flex:1 1 240px;display:flex;flex-direction:column;gap:1px;min-width:0}
+.ck-body b{font-weight:500;color:var(--ink)}
+.ck-body small{font-size:13px;color:var(--ink-3)}
+.ready{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:12px 14px;border-radius:4px;border:1px solid var(--good-line);background:var(--good-tint);color:var(--good-text);font-size:14px}
+.locked{display:flex;gap:12px;align-items:center;padding:14px;border-radius:4px;border:1px dashed var(--line-bold);background:var(--sunk);font-size:14px;color:var(--ink-3)}
+
+.pick{display:flex;flex-wrap:wrap;gap:8px}
+.pick label{display:flex;align-items:center;gap:8px;border:1px solid var(--line-strong);border-radius:4px;padding:8px 12px;font-size:14px;color:var(--ink);cursor:pointer;background:var(--surface)}
+.pick label:has(input:checked){border-color:var(--ink);background:var(--accent-tint)}
+.pick input{accent-color:var(--ink)}
+
+.wallets{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.wallet{border:1px solid var(--line-strong);border-radius:4px;padding:16px;display:flex;flex-direction:column;gap:12px;background:var(--surface)}
+.w-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.ccy{font:600 15px var(--data);color:var(--ink);display:flex;align-items:center;gap:12px}
+.ccy .cn{display:flex;flex-direction:column;line-height:1.2}
+.ccy .cn small{font:500 12px var(--sans);color:var(--ink-3);letter-spacing:.04em}
+.flag{display:block;flex:none;border-radius:50%;box-shadow:0 0 0 1px var(--line-strong),0 1px 3px rgba(10,30,63,.18)}
+.wallet{border-top-width:4px}
+.wallet.c-KES{border-top-color:#1f6b45}.wallet.c-USD{border-top-color:#3c3b6e}.wallet.c-GBP{border-top-color:#c8102e}.wallet.c-EUR{border-top-color:#003399}
+.pick .flag{box-shadow:0 0 0 1px var(--line-strong)}
+.seg span{display:inline-flex;align-items:center;gap:6px}
+.inl{display:inline-flex;align-items:center;gap:8px}
+.ccy i{font-style:normal;width:34px;height:34px;border-radius:17px;background:var(--sunk);display:flex;align-items:center;justify-content:center;font-size:12px;letter-spacing:.04em;color:var(--ink)}
+.bal{display:flex;flex-direction:column;gap:2px}
+.bal span{font-size:13px;color:var(--ink-3)}
+.bal strong{font:600 22px var(--data);color:var(--ink);font-variant-numeric:tabular-nums}
+.acct{background:var(--sunk);border-radius:4px;padding:12px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;font-size:13px}
+.acct dt{color:var(--ink-3)}
+.acct dd{margin:0;color:var(--ink);font-family:var(--data);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.acct.wait{display:flex;gap:10px;align-items:center;color:var(--warn-text);background:var(--warn-tint)}
+
+.money{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.tile{padding:16px;display:flex;flex-direction:column;gap:6px}
+.tile span{font-size:13px}
+.tile strong{font:600 20px var(--data);color:var(--ink);font-variant-numeric:tabular-nums}
+
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font:600 11px var(--data);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);padding:0 12px 10px 0;border-bottom:1px solid var(--line-bold);white-space:nowrap}
+td{padding:12px 12px 12px 0;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink)}
+td small{display:block;font-size:12.5px;color:var(--ink-3)}
+td.r,th.r{text-align:right}
+tr:last-child td{border-bottom:0}
+
+.feed{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0}
+.feed li{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--line);font-size:14px}
+.feed li:first-child{border-top:0;padding-top:0}
+.dot{width:10px;height:10px;border-radius:5px;margin-top:6px;flex:none;background:var(--line-bold)}
+.dot.in{background:var(--good-text)}
+.dot.mv{background:var(--accent)}
+.feed b{font-weight:500;color:var(--ink)}
+.feed small{display:block;color:var(--ink-3);font-size:13px}
+
+/* payments page */
+.spv{display:flex;gap:16px;flex-wrap:wrap;align-items:center;padding:16px 20px}
+.spv-name{flex:1 1 260px;display:flex;flex-direction:column;gap:2px}
+.spv-name b{font-weight:600;color:var(--ink);font-size:16px}
+.pw{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.pw .wallet{gap:8px}
+.asof{font-size:12.5px;color:var(--ink-3)}
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:13px;border:1px solid var(--line-strong);border-radius:14px;padding:3px 11px;background:var(--surface);color:var(--ink-2)}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* demo rail */
+.rail{background:var(--surface);border-left:1px solid var(--line-strong);display:flex;flex-direction:column;min-width:0}
+@media (max-width:1100px){.rail{border-left:0;border-top:1px solid var(--line-strong)}}
+.rail-in{position:sticky;top:0;display:flex;flex-direction:column;gap:16px;padding-block:20px 28px;padding-left:20px;padding-right:max(20px,env(safe-area-inset-right,0px));max-height:100vh;overflow:auto}
+@media (max-width:1100px){.rail-in{position:static;max-height:none;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}}
+.rail h2{font-size:15px}
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px;counter-reset:s}
+.steps li{display:flex;gap:10px;align-items:center;font-size:14px;padding:6px 8px;border-radius:4px;color:var(--ink-3)}
+.steps li::before{counter-increment:s;content:counter(s);width:22px;height:22px;border-radius:11px;border:1.5px solid var(--line-bold);display:flex;align-items:center;justify-content:center;font:600 11px var(--data);flex:none}
+.steps li.done{color:var(--ink)}
+.steps li.done::before{content:"✓";background:var(--ink);border-color:var(--ink);color:#fff}
+.steps li.next{background:var(--accent-tint);color:var(--ink);font-weight:600}
+.steps li.next::before{border-color:var(--accent);color:var(--accent-text)}
+.rail-btns{display:flex;gap:8px;flex-wrap:wrap}
+.log{display:flex;flex-direction:column;gap:10px}
+.entry{border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.entry-h{padding:8px 12px;font-size:13px;font-weight:600;color:var(--ink);background:var(--sunk);display:flex;justify-content:space-between;gap:8px}
+.entry-h em{font-style:normal;font-weight:500;color:var(--ink-3)}
+.entry p{margin:0;padding:8px 12px;font-size:13px;line-height:1.5;color:var(--ink-2)}
+.entry pre{margin:0;padding:10px 12px;background:var(--code-bg);color:var(--code-ink);font:12px/1.55 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere}
+.entry pre .c{color:var(--code-dim)}
+.entry pre .k{color:var(--code-key)}
+.entry pre .s{color:var(--code-str)}
+.who{font:600 10px var(--data);letter-spacing:.12em;text-transform:uppercase;padding:1px 6px;border-radius:2px}
+.who.d{background:var(--ink);color:#fff}
+.who.v{background:var(--accent);color:#fff}
+.sample{font-size:12px;color:var(--ink-3)}
+
+/* buyer portal: the buyer's own app, lighter and simpler than the team's */
+.ptop{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-bottom:16px;border-bottom:1px solid var(--line-strong)}
+.ptop .brand2{font:600 18px var(--data);color:var(--ink)}
+.ptop .brand2 small{display:block;font:500 12px var(--sans);color:var(--ink-3)}
+.pcols{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:760px){.pcols{grid-template-columns:minmax(0,1fr)}}
+.seg{display:inline-flex;border:1px solid var(--line-strong);border-radius:4px;overflow:hidden}
+.seg span{padding:6px 16px;font-size:14px;color:var(--ink-2)}
+.seg .on{background:var(--ink);color:#fff;font-weight:600}
+.quote{border:1px solid var(--accent-line);background:var(--accent-tint);border-radius:6px;padding:18px;display:flex;flex-direction:column;gap:6px}
+.quote .big{font:600 34px var(--data);color:var(--ink);font-variant-numeric:tabular-nums;line-height:1.1}
+.quote .gets{font-size:15px;color:var(--ink)}
+.rate{font-size:13px;color:var(--ink-3);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.ring{width:16px;height:16px;border-radius:50%;background:conic-gradient(var(--accent) var(--pct,80%),var(--line) 0);display:inline-block}
+.note{font-size:13px;color:var(--ink-3)}
+.autop{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line-strong);border-radius:4px;cursor:pointer;font-size:14px}
+.autop input{margin-top:3px;accent-color:var(--ink)}
+.autop b{color:var(--ink);font-weight:500;display:block}
+.autop small{color:var(--ink-3);font-size:13px}
+</style>
+
+<div class="shell">
+  <div class="app">
+    <header class="bar" id="appbar">
+      <span class="brand"><i aria-hidden="true"></i>DwellOS</span>
+      <span class="proj">Riverside Gardens ▾</span>
+      <nav class="nav" aria-label="Main">
+        <button type="button">Overview</button>
+        <button type="button" data-view="deal" id="nav-deals">Deals</button>
+        <button type="button">Inventory</button>
+        <button type="button">Partners</button>
+        <button type="button" data-view="payments" id="nav-payments">Payments<span class="new">NEW</span></button>
+        <button type="button">Reports</button>
+      </nav>
+    </header>
+    <main class="page"><div class="wrap" id="view"></div></main>
+  </div>
+  <aside class="rail" aria-label="Demo controls">
+    <div class="rail-in">
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <p class="cap">Demo</p>
+        <h2>Jane pays for B-204</h2>
+        <p class="sub">Click <b>Next step</b>, or use the buttons on the page. Each step shows what DwellOS and Verto do behind it.</p>
+      </div>
+      <ol class="steps" id="steps"></ol>
+      <div class="rail-btns">
+        <button type="button" class="btn btn-p" id="next">Next step</button>
+        <button type="button" class="btn" id="reset">Start again</button>
+      </div>
+      <div class="rail-btns"><button type="button" class="btn btn-s" data-view="portal">Jane's buyer portal</button><button type="button" class="btn btn-s" data-view="deal">Deal page</button><button type="button" class="btn btn-s" data-view="payments">Payments page</button></div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <p class="cap">Behind the scenes</p>
+        <div class="log" id="log"></div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<script>
+const SUB = "9698"; // Riverside Gardens SPV Ltd's Verto sub-account (sandbox id seen in probes)
+const STEPS = [
+  {label:"Check Jane's ID", view:"deal"},
+  {label:"Run the background check", view:"deal"},
+  {label:"Create Jane's wallets", view:"deal"},
+  {label:"Get the bank details", view:"deal"},
+  {label:"Jane pays KES 450,000", view:"deal"},
+  {label:"Move it to the project wallet", view:"payments"},
+  {label:"Jane sees what to send in USD", view:"portal"},
+  {label:"Her USD lands and waits for her", view:"portal"},
+  {label:"Jane clicks Pay now", view:"portal"},
+];
+const LOG = [
+  {title:"ID check passed", who:"d", text:"DwellOS checks Jane's passport against a selfie, through our own ID provider. Verto is not called. Nothing about money can happen yet.",
+   code:`<span class="c"># DwellOS only</span>
+deal_parties.jane  identity_check = <span class="s">passed</span>`},
+  {title:"Background check passed", who:"d", text:"DwellOS screens Jane for sanctions, politically exposed persons and bad press (AML). If this fails, we stop here, before anything reaches Verto's rails.",
+   code:`<span class="c"># DwellOS only</span>
+deal_parties.jane  aml_screening = <span class="s">clear</span>
+deal B-204         payment_readiness = <span class="s">ready</span>`},
+  {title:"Wallets created", who:"v", text:"DwellOS logs in AS the project's sub-account, then creates one wallet per currency for this deal. Verto only sees two more wallets. DwellOS records which deal they belong to.",
+   code:`<span class="k">POST</span> /sub-accounts/${SUB}/login        <span class="c"># 1-hour token for the SPV</span>
+<span class="k">POST</span> /${SUB}/wallets  {currency:<span class="s">"KES"</span>, type:<span class="s">"standard"</span>,
+       customReferenceLabel:<span class="s">"deal B-204 Jane Wanjiku"</span>}
+<span class="k">POST</span> /${SUB}/wallets  {currency:<span class="s">"USD"</span>, …}
+<span class="c"># DwellOS: wallets.deal_id = B-204  (role: deal)</span>`},
+  {title:"Bank details ready", who:"v", text:"For each new wallet DwellOS asks Verto to make a real bank account. The account starts as pending; DwellOS checks again until a number appears, then shows it to Jane.",
+   code:`<span class="k">GET</span> /${SUB}/wallets/50211/fundingMethods?autoCreate=<span class="s">true</span>
+<span class="c"># → status "Creation in progress" … then account number</span>
+<span class="k">GET</span> /${SUB}/wallets/50212/fundingMethods?autoCreate=<span class="s">true</span>`},
+  {title:"Money received", who:"v", text:"Jane sends KES 450,000 from her bank to the KES account. The wallet it landed in tells DwellOS whose money it is. No reference to match. DwellOS confirms with Verto, then pays off the next item on her plan.",
+   code:`<span class="c"># webhook</span>  ibanToWallet.completed  walletId=50211
+<span class="k">POST</span> /payments/list  {paymentIds:[…]}   <span class="c"># confirm, never trust the webhook alone</span>
+<span class="c"># DwellOS: wallet 50211 → deal B-204 → "Reservation fee" paid</span>`},
+  {title:"Swept to the project wallet", who:"v", text:"DwellOS moves the money from Jane's wallet into Riverside Gardens' main KES wallet. It goes through the outbox with a fixed key, so a retry can never move it twice.",
+   code:`<span class="c"># outbox job sweep:txn_8812</span>
+<span class="k">POST</span> /transfer  {sourceWalletId:50211, targetWalletId:40007,
+  amount:450000, currency:<span class="s">"KES"</span>, externalUniqueRef:<span class="s">"sweep-txn_8812"</span>}
+<span class="c"># webhook walletToWallet.completed ×2 (debit + credit)</span>`},
+  {title:"Jane sees roughly what to send", who:"v", text:"Jane signs in to her buyer portal. It shows the ACH details of her own USD wallet and about how many dollars her deposit will cost. This is only a guide: nothing is changed to KES until she says so. DwellOS asks Verto for a fresh rate every 30 seconds.",
+   code:`<span class="c"># every 30 seconds while the page is open</span>
+<span class="k">POST</span> /fx/quote  {currencyFrom:<span class="s">"USD"</span>, currencyTo:<span class="s">"KES"</span>,
+  amountCurrency:<span class="s">"KES"</span>, amount:450000}
+<span class="c"># → 1 USD = KES 128.95 → about USD 3,489.73</span>`},
+  {title:"USD landed and held", who:"v", text:"Jane's USD 3,600.00 arrives by ACH in her USD wallet. The wallet tells DwellOS it is hers. It stays there as dollars. Her plan does not change yet, and nobody but Jane can choose when it is changed.",
+   code:`<span class="c"># webhook</span>  ibanToWallet.completed  walletId=50212
+<span class="k">POST</span> /payments/list  {paymentIds:[…]}   <span class="c"># confirm</span>
+<span class="c"># DwellOS: deal B-204 holds USD 3,600.00, not yet paid</span>
+<span class="k">POST</span> /fx/quote  {…, amountCurrency:<span class="s">"KES"</span>, amount:450000}
+<span class="c"># → vfxToken, price holds 60 seconds</span>`},
+  {title:"Jane paid now", who:"v", text:"Jane clicks Pay now while the price holds. DwellOS records her click as her instruction, then trades on that exact quote. Exactly KES 450,000 lands in Riverside Gardens' KES wallet, and the deposit is paid. USD 110.27 stays in her wallet for next time.",
+   code:`<span class="c"># Jane's instruction, 4 Nov 09:14:07, quote 128.95</span>
+<span class="k">POST</span> /fx/payments  {paymentType:<span class="s">"convertWithinWallets"</span>,
+  sourceWalletId:50212, targetWalletId:40007,
+  targetAmount:450000, vfxToken, paymentId:<span class="s">"fx-pay_3391"</span>}
+<span class="c"># KES 450,000 lands in 40007 → Deposit paid</span>
+<span class="c"># USD 110.27 left in 50212</span>`},
+];
+
+const CNAME = {KES:"Kenyan shilling", USD:"US dollar", GBP:"British pound", EUR:"Euro"};
+let fid = 0;
+function flag(c, sz=40){
+  const id = "fl" + (++fid);
+  let body = "";
+  if (c==="KES") body = `<rect width="60" height="60" fill="#000"/><rect y="18" width="60" height="24" fill="#fff"/><rect y="21" width="60" height="18" fill="#bb0000"/><rect y="42" width="60" height="18" fill="#006600"/><ellipse cx="30" cy="30" rx="9" ry="17" fill="#000"/><ellipse cx="30" cy="30" rx="5.5" ry="15" fill="#bb0000"/><ellipse cx="30" cy="30" rx="1.6" ry="5" fill="#fff"/>`;
+  if (c==="USD") { body = `<rect width="60" height="60" fill="#b22234"/>`; for (let i=1;i<13;i+=2) body += `<rect y="${(i*60/13).toFixed(2)}" width="60" height="${(60/13).toFixed(2)}" fill="#fff"/>`; body += `<rect width="30" height="32.3" fill="#3c3b6e"/>`; for (let r=0;r<4;r++) for (let k=0;k<4;k++) body += `<circle cx="${5+k*6.5+(r%2)*3}" cy="${5+r*7.5}" r="1.4" fill="#fff"/>`; }
+  if (c==="GBP") body = `<rect width="60" height="60" fill="#012169"/><path d="M0 0L60 60M60 0L0 60" stroke="#fff" stroke-width="12"/><path d="M0 0L60 60M60 0L0 60" stroke="#c8102e" stroke-width="4"/><path d="M30 0V60M0 30H60" stroke="#fff" stroke-width="14"/><path d="M30 0V60M0 30H60" stroke="#c8102e" stroke-width="8"/>`;
+  if (c==="EUR") { body = `<rect width="60" height="60" fill="#003399"/>`; for (let i=0;i<12;i++){ const a=i*Math.PI/6; body += `<circle cx="${(30+16*Math.cos(a)).toFixed(2)}" cy="${(30+16*Math.sin(a)).toFixed(2)}" r="2.3" fill="#ffcc00"/>`; } }
+  return `<svg class="flag" width="${sz}" height="${sz}" viewBox="0 0 60 60" aria-hidden="true"><clipPath id="${id}"><circle cx="30" cy="30" r="30"/></clipPath><g clip-path="url(#${id})">${body}</g></svg>`;
+}
+const walletTitle = (c, extra) => `<span class="ccy">${flag(c)}<span class="cn">${extra||CNAME[c]+" wallet"}<small>${c}</small></span></span>`;
+let step = 0, view = "deal", picked = {KES:true, USD:true, GBP:false, EUR:false}, justDone = -1;
+
+const fmt = (c, n) => c + " " + n.toLocaleString("en-US", {minimumFractionDigits: c==="KES"?0:2, maximumFractionDigits: 2});
+const tick = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>';
+const lock = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+
+function schedule(){
+  return [
+    {what:"Reservation fee", due:"10 Nov 2026", amt:450000, paid: step>=5 ? {on:"3 Nov", via:"KES wallet"} : null},
+    {what:"Deposit", due:"30 Nov 2026", amt:450000, paid: step>=9 ? {on:"4 Nov", via:"Jane paid USD 3,489.73 at 128.95"} : null, converting: step===8},
+    {what:"Instalment 1", due:"28 Feb 2027", amt:2700000},
+    {what:"Instalment 2", due:"31 May 2027", amt:2700000},
+    {what:"Balance at handover", due:"30 Sep 2027", amt:2700000},
+  ];
+}
+function walletList(){
+  if (step < 3) return [];
+  const cs = Object.keys(picked).filter(c => picked[c]);
+  return cs.map(c => {
+    let bal = 0;
+    if (c==="KES" && step===5) bal = 450000;
+    if (c==="USD" && step===8) bal = 3600;
+    if (c==="USD" && step>=9) bal = 110.27;
+    return {c, ready: step>=4, bal};
+  });
+}
+
+function dealView(){
+  const idDone = step>=1, amlDone = step>=2, ready = amlDone;
+  const sch = schedule(), paid = sch.filter(s=>s.paid).reduce((a,s)=>a+s.amt,0);
+  const wl = walletList();
+  const acct = {
+    KES:{name:"Riverside Gardens SPV Ltd", no:"1004 2215 8873", bank:"Verto partner bank, Nairobi", extra:["Branch code","01-104"]},
+    USD:{name:"Riverside Gardens SPV Ltd", no:"8310 4417 0093", bank:"Verto partner bank, New York", extra:["ACH routing","026 073 150"]},
+    GBP:{name:"Riverside Gardens SPV Ltd", no:"7712 0455", bank:"Verto partner bank, London", extra:["Sort code","04-00-75"]},
+    EUR:{name:"Riverside Gardens SPV Ltd", no:"GB29 VRTO 6016 1331 9268 19", bank:"Verto partner bank, London", extra:["SWIFT","VRTOGB2LXXX"]},
+  };
+  const f = i => justDone===i ? " flash" : "";
+  return `
+  <span style="font-size:14px;color:var(--ink-2)">← All deals</span>
+  <div class="head">
+    <span class="avatar" aria-hidden="true">JW</span>
+    <div style="flex:1 1 320px;display:flex;flex-direction:column;gap:4px;min-width:0">
+      <h1>Jane Wanjiku</h1>
+      <div>Buying <strong style="color:var(--ink);font-weight:500">Unit B-204</strong> at Riverside Gardens · lives in Houston, USA</div>
+    </div>
+    ${ready ? '<span class="tag t-good">Ready to pay</span>' : '<span class="tag t-warn">Not ready to pay</span>'}
+  </div>
+  <div class="tabs" role="presentation">
+    <span>Overview</span><span>Documents <span class="n">4</span></span><span>Engagement <span class="n">18</span></span>
+    <span class="on">Wallets ${wl.length?`<span class="n">${wl.length}</span>`:""}</span><span>Tasks <span class="n">3</span></span><span>Viewings <span class="n">2</span></span>
+  </div>
+  <div class="cols">
+    <div class="main">
+      <section class="card sec${f(0)}${f(1)}" aria-labelledby="rd-h">
+        <div class="sec-h"><h2 id="rd-h">Before Jane can pay</h2><span class="sub">${[true,idDone,amlDone].filter(Boolean).length} of 3 done</span></div>
+        <ul class="checks">
+          <li><span class="ck done">${tick}</span><span class="ck-body"><b>The project account is approved</b><small>Riverside Gardens SPV Ltd · approved by Verto on 14 Oct 2026</small></span><span class="tag t-good">Done</span></li>
+          <li><span class="ck ${idDone?"done":"todo"}">${idDone?tick:""}</span><span class="ck-body"><b>Jane's ID is checked</b><small>${idDone?"Passport matches her selfie · checked 3 Nov":"We check her passport or national ID against a selfie"}</small></span>
+            ${idDone?'<span class="tag t-good">Done</span>':'<button type="button" class="btn btn-s" data-go="0">Check ID</button>'}</li>
+          <li><span class="ck ${amlDone?"done":"todo"}">${amlDone?tick:""}</span><span class="ck-body"><b>Background check is clear</b><small>${amlDone?"No sanctions, no political links, no bad press · checked 3 Nov":"Money laundering, sanctions and political links (AML)"}</small></span>
+            ${amlDone?'<span class="tag t-good">Done</span>':`<button type="button" class="btn btn-s" data-go="1" ${idDone?"":"disabled"}>Run check</button>`}</li>
+        </ul>
+        ${ready && !wl.length ? '<div class="ready"><strong>Jane is ready to pay.</strong> Create her wallets below.</div>' : ""}
+      </section>
+
+      <section class="card sec${f(2)}${f(3)}${f(4)}${f(7)}" aria-labelledby="w-h">
+        <div class="sec-h"><h2 id="w-h">Jane's wallets</h2>${wl.length?'<span class="sub">She can pay into any of them</span>':""}</div>
+        ${!ready ? `<div class="locked">${lock}<span>Wallets open once both checks above are done.</span></div>` : ""}
+        ${ready && !wl.length ? `
+          <p class="sub" style="color:var(--ink-2)">Pick the money Jane will pay in. Each one gets its own bank account. Her plan stays in KES. Other money waits in her wallet until she pays from it.</p>
+          <div class="pick">${Object.keys(picked).map(c=>`<label for="cur-${c}"><input type="checkbox" id="cur-${c}" data-cur="${c}" ${picked[c]?"checked":""}>${flag(c,22)}${c}${c==="KES"?' <span class="sample">(plan currency)</span>':""}</label>`).join("")}</div>
+          <div><button type="button" class="btn btn-p" data-go="2">Create wallets</button></div>` : ""}
+        ${wl.length ? `<div class="wallets">${wl.map(w=>`
+          <div class="wallet c-${w.c}">
+            <div class="w-top">${walletTitle(w.c)}${w.ready?(w.bal?'<span class="tag t-info">Money in</span>':'<span class="tag t-good">Ready</span>'):'<span class="tag t-warn"><span class="spin"></span>Getting bank details</span>'}</div>
+            <div class="bal"><span>In this wallet now</span><strong>${fmt(w.c,w.bal)}</strong></div>
+            ${w.ready ? `<dl class="acct"><dt>Account name</dt><dd>${acct[w.c].name}</dd><dt>Account no.</dt><dd>${acct[w.c].no}</dd><dt>Bank</dt><dd>${acct[w.c].bank}</dd><dt>${acct[w.c].extra[0]}</dt><dd>${acct[w.c].extra[1]}</dd></dl>
+              <div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn btn-s">Send to Jane</button><button type="button" class="btn btn-s">Copy</button></div>`
+            : `<div class="acct wait"><span class="spin"></span>Verto is opening the bank account. This can take a few minutes.</div>
+               ${step===3?'<div><button type="button" class="btn btn-s" data-go="3">Check again</button></div>':""}`}
+          </div>`).join("")}</div>
+          ${step>=4?'<p class="sample">KES is moved to the project wallet as it lands. USD waits here until Jane clicks Pay now in her portal. Example bank details.</p>':""}` : ""}
+      </section>
+
+      <section aria-labelledby="m-h" style="display:flex;flex-direction:column;gap:10px">
+        <h2 id="m-h" class="cap">Payment plan</h2>
+        <div class="money">
+          <div class="card tile"><span>Price</span><strong>KES 9,000,000</strong></div>
+          <div class="card tile${f(4)}${f(8)}"><span>Paid so far</span><strong>${fmt("KES",paid)}</strong></div>
+          <div class="card tile"><span>Still to pay</span><strong>${fmt("KES",9000000-paid)}</strong></div>
+        </div>
+        <div class="card sec">
+          <div class="tbl"><table>
+            <thead><tr><th>What</th><th>Due</th><th class="r">Amount</th><th>Status</th></tr></thead>
+            <tbody>${sch.map((s,i)=>`<tr class="${(i===0&&justDone===4)||(i===1&&(justDone===7||justDone===8))?"flash":""}"><td>${s.what}</td><td class="num">${s.due}</td><td class="r num">${fmt("KES",s.amt)}</td>
+              <td>${s.paid?`<span class="tag t-good">Paid ${s.paid.on}</span><small>${s.paid.via}</small>`:s.converting?'<span class="tag t-info">Jane can pay now</span><small>USD 3,600.00 in her USD wallet</small>':(i===0||i===1)&&ready?'<span class="tag t-mute">Waiting</span>':'<span class="tag t-mute">Not due</span>'}</td></tr>`).join("")}</tbody>
+          </table></div>
+        </div>
+      </section>
+    </div>
+
+    <aside class="side">
+      <section class="card sec" aria-labelledby="a-h">
+        <h2 id="a-h">Money activity</h2>
+        ${step<5?'<p class="sub">Nothing yet. Payments into Jane\'s wallets show here.</p>':`<ul class="feed">
+          ${step>=9?'<li><span class="dot mv"></span><span><b>Jane paid KES 450,000 from her USD</b><small>USD 3,489.73 at 128.95, her choice · into Riverside Gardens KES wallet · paid the Deposit · USD 110.27 left</small></span></li>':""}
+          ${step>=8?'<li><span class="dot in"></span><span><b>USD 3,600.00 received by ACH</b><small>From JANE WANJIKU, Chase ****4471 · waiting for Jane to pay</small></span></li>':""}
+          ${step>=6?'<li><span class="dot mv"></span><span><b>KES 450,000 moved to the project</b><small>Into Riverside Gardens KES wallet · 3 Nov</small></span></li>':""}
+          <li><span class="dot in"></span><span><b>KES 450,000 received</b><small>From JANE WANJIKU, Equity Bank ****2290 · paid the Reservation fee</small></span></li>
+        </ul>`}
+      </section>
+      <section class="card sec" aria-labelledby="p-h">
+        <h2 id="p-h">Who owns the home</h2>
+        <dl class="acct" style="background:none;padding:0"><dt>Owner</dt><dd style="font-family:var(--sans)">Jane Wanjiku</dd><dt>Pays from</dt><dd style="font-family:var(--sans)">Kenya and the US</dd><dt>Checks</dt><dd style="font-family:var(--sans)">${amlDone?"ID and background done":idDone?"ID done, background waiting":"Not started"}</dd></dl>
+      </section>
+    </aside>
+  </div>`;
+}
+
+function paymentsView(){
+  const kes = 31450000 + (step>=6?450000:0) + (step>=9?450000:0);
+  const dealWallets = 38 + (step>=3 ? Object.values(picked).filter(Boolean).length : 0);
+  const waiting = step===5?1:0;
+  const held = 4180 + (step===8?3600:step>=9?110.27:0);
+  const rows = [];
+  if (step>=9) rows.push(["4 Nov","Paid by Jane from USD","Jane Wanjiku · B-204","USD 3,489.73 at 128.95 · Deposit","KES",450000,"done",9]);
+  if (step>=8) rows.push(["4 Nov","Received by ACH","Jane Wanjiku · B-204",step>=9?"Into her USD wallet · USD 110.27 left":"Into her USD wallet","USD",3600,step>=9?"part":"held",8]);
+  if (step>=6) rows.push(["3 Nov","Moved to project","Jane Wanjiku · B-204","KES wallet → Riverside KES · Reservation fee","KES",450000,"done",6]);
+  if (step>=5) rows.push(["3 Nov","Received","Jane Wanjiku · B-204","Into her KES wallet","KES",450000,step>=6?"moved":"waiting",5]);
+  rows.push(["1 Nov","Moved to project","Brian Otieno · A-101","KES wallet → Riverside KES · Instalment 2","KES",1200000,"done"]);
+  rows.push(["1 Nov","Received","Brian Otieno · A-101","Into his KES wallet","KES",1200000,"moved"]);
+  rows.push(["29 Oct","Paid by Amina from GBP","Amina Hassan · C-310","GBP 14,200.00 at 166.70 · Deposit","KES",2367140,"done"]);
+  rows.push(["29 Oct","Received","Amina Hassan · C-310","Into her GBP wallet","GBP",14200,"converted"]);
+  const st = s => s==="waiting"?'<span class="tag t-warn">Waiting to move</span>':s==="moved"?'<span class="tag t-good">Moved</span>':s==="converted"?'<span class="tag t-good">Paid in full</span>':s==="held"?'<span class="tag t-info">Waiting for buyer</span>':s==="part"?'<span class="tag t-good">Part paid</span>':'<span class="tag t-good">Done</span>';
+  return `
+  <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;justify-content:space-between">
+    <div style="display:flex;flex-direction:column;gap:4px"><p class="cap">Riverside Gardens</p><h1>Payments</h1></div>
+    <button type="button" class="btn">Download statement</button>
+  </div>
+  <section class="card spv" aria-label="Project account">
+    <div class="spv-name"><b>Riverside Gardens SPV Ltd</b><span class="sub">The company that owns this project. Verto holds its money.</span></div>
+    <span class="tag t-good">Approved by Verto · 14 Oct 2026</span>
+    <span class="mono" style="color:var(--ink-3)">Account ${SUB}</span>
+  </section>
+  <section style="display:flex;flex-direction:column;gap:10px" aria-labelledby="pw-h">
+    <div class="sec-h"><h2 id="pw-h" class="cap">Project wallet</h2><span class="sub">Every buyer payment ends up here, in KES</span></div>
+    <div class="pw">
+      <div class="wallet c-KES${justDone===5||justDone===8?" flash":""}">${walletTitle("KES","Riverside Gardens KES wallet")}<div class="bal"><span>Balance</span><strong>${fmt("KES",kes)}</strong></div><span class="asof">Checked with Verto 2 min ago</span></div>
+      <div class="wallet"><span class="ccy" style="font-size:15px">Paid from other money this month</span><div class="bal"><span class="inl">${flag("USD",18)}From US dollars</span><strong>${fmt("USD",48210+(step>=9?3489.73:0))}</strong></div><div class="bal"><span class="inl">${flag("GBP",18)}From British pounds</span><strong>${fmt("GBP",14200)}</strong></div></div>
+    </div>
+  </section>
+  <div class="money">
+    <div class="card tile"><span>Buyer wallets</span><strong>${dealWallets}</strong></div>
+    <div class="card tile"><span>Waiting to move</span><strong>${waiting}</strong></div>
+    <div class="card tile${justDone===7||justDone===8?" flash":""}"><span>Held for buyers, not yet paid</span><strong>${fmt("USD",held)}</strong></div>
+  </div>
+  <section class="card sec" aria-labelledby="tx-h">
+    <div class="sec-h"><h2 id="tx-h">All money in and out</h2>
+      <div class="filters"><span class="chip on">All</span><span class="chip">Received</span><span class="chip">Moved</span><span class="chip">Needs a person</span></div></div>
+    <div class="tbl"><table>
+      <thead><tr><th>Date</th><th>What</th><th>Buyer</th><th class="r">Amount</th><th>Status</th></tr></thead>
+      <tbody>${rows.map(r=>`<tr class="${r[7]!==undefined&&justDone===r[7]-1?"flash":""}"><td class="num">${r[0]}</td><td>${r[1]}<small>${r[3]}</small></td><td>${r[2]}</td><td class="r num">${fmt(r[4],r[5])}</td><td>${st(r[6])}</td></tr>`).join("")}</tbody>
+    </table></div>
+    <p class="sample">Example data. Verto sees one company with many wallets. Only DwellOS knows which wallet belongs to which buyer.</p>
+  </section>`;
+}
+
+let rate = 128.95, left = 30, auto = false;
+function portalView(){
+  const sch = schedule(), paid = sch.filter(s=>s.paid).reduce((a,s)=>a+s.amt,0);
+  const next = sch.find(s=>!s.paid);
+  const usd = Math.ceil(450000/rate*100)/100;
+  const ready = step>=4, held = step===8, done = step>=9;
+  const ach = `<div style="display:flex;flex-direction:column;gap:8px">
+        <span class="ccy">${flag("USD",32)}<span class="cn">Send US dollars by ACH to<small>Your USD wallet</small></span></span>
+        <dl class="acct"><dt>Account name</dt><dd>Riverside Gardens SPV Ltd</dd><dt>Bank</dt><dd>Verto partner bank, New York</dd><dt>ACH routing</dt><dd>026 073 150</dd><dt>Account no.</dt><dd>8310 4417 0093</dd><dt>Type</dt><dd>Checking</dd></dl>
+        <span class="note">This account is only for you. Any money sent here is yours until you pay with it. Example details.</span>
+      </div>`;
+  const autoBox = `<label class="autop" for="auto"><input type="checkbox" id="auto" ${auto?"checked":""}><span><b>Pay automatically when my dollars land</b><small>${auto?"On. Your next payment is made at the rate on the day your money lands. You will not see the price first.":"Off. You choose when to pay and see the exact price first."}</small></span></label>`;
+  let main;
+  if (held) main = `
+      <div class="sec-h"><h2 id="pay-h">Your dollars have arrived</h2><span class="tag t-good">USD 3,600.00</span></div>
+      <div style="display:flex;gap:14px;align-items:center">${flag("USD",48)}<div class="bal"><span>In your US dollar wallet</span><strong>USD 3,600.00</strong></div></div>
+      <div class="quote${justDone===7?" flash":""}">
+        <span class="sub">Pay your ${next.what} · ${fmt("KES",next.amt)}</span>
+        <span class="big" id="q-usd">${fmt("USD",usd)}</span>
+        <span class="gets">from your USD wallet. Riverside Gardens gets exactly <b>${fmt("KES",next.amt)}</b>.</span>
+        <span class="rate"><span class="ring" id="q-ring"></span><span id="q-rate">1 USD = KES ${rate.toFixed(2)} · this price holds for ${left}s</span></span>
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:6px"><button type="button" class="btn btn-p" data-go="7">Pay now</button><span class="note" id="q-left">USD ${(3600-usd).toFixed(2)} will stay in your wallet.</span></div>
+      </div>
+      <p class="note">When the time runs out, you get a new price. You can also pay later. Your deposit is due on ${next===undefined?"":"30 Nov 2026"}.</p>`;
+  else if (done) main = `
+      <div class="sec-h"><h2 id="pay-h">Deposit paid</h2><span class="tag t-good">Paid 4 Nov</span></div>
+      <div class="quote${justDone===8?" flash":""}" style="border-color:var(--good-line);background:var(--good-tint)">
+        <span class="gets">Riverside Gardens got <b>KES 450,000</b>.</span>
+        <span class="gets">You paid <b>USD 3,489.73</b> at 1 USD = KES 128.95.</span>
+        <span class="note">USD 110.27 is still in your wallet for next time.</span>
+      </div>
+      <div><span class="sub">Next: ${next.what} · due ${next.due}</span><div class="num" style="font:600 20px var(--data);color:var(--ink)">${fmt("KES",next.amt)}</div></div>`;
+  else main = `
+      <div class="sec-h"><h2 id="pay-h">Your next payment</h2><span class="seg"><span>${flag("KES",18)}KES</span><span class="on">${flag("USD",18)}USD</span></span></div>
+      <div><span class="sub">${next.what} · due ${next.due}</span><div class="num" style="font:600 20px var(--data);color:var(--ink)">${fmt("KES",next.amt)}</div></div>
+      <div class="quote${justDone===6?" flash":""}">
+        <span class="sub">Today that is about</span>
+        <span class="big" id="q-usd">${fmt("USD",usd)}</span>
+        <span class="rate"><span class="ring" id="q-ring"></span><span id="q-rate">1 USD = KES ${rate.toFixed(2)} · new rate in ${left}s</span></span>
+      </div>
+      <p class="note">Send your dollars any time. They wait in your wallet until you pay. Then you see the exact price and have 60 seconds to accept it. Sending a little extra is fine: what is left stays for next time.</p>`;
+  return `
+  <div class="ptop"><span class="brand2">Riverside Gardens<small>Buyer portal · Unit B-204</small></span><span class="sub">Jane Wanjiku · Sign out</span></div>
+  <h1>Hi Jane</h1>
+  ${!ready?'<div class="locked">'+lock+'<span>Your payment details will show here once your checks are done and your accounts are open.</span></div>':`
+  <div class="pcols">
+    <section class="card sec" aria-labelledby="pay-h">${main}${autoBox}${ach}</section>
+    <section class="card sec" aria-labelledby="pp-h">
+      <h2 id="pp-h">Your plan</h2>
+      <div class="bal"><span>Paid so far</span><strong>${fmt("KES",paid)} <span style="font-size:14px;color:var(--ink-3);font-weight:500">of KES 9,000,000</span></strong></div>
+      <ul class="feed">${sch.slice(0,3).map(s=>`<li><span class="dot ${s.paid?"in":""}"></span><span><b>${s.what} · ${fmt("KES",s.amt)}</b><small>${s.paid?"Paid "+s.paid.on:s.converting?"Ready to pay from your dollars":"Due "+s.due}</small></span></li>`).join("")}</ul>
+      <div class="bal"><span>In your wallets, not yet paid</span><strong style="font-size:17px">${step===8?"USD 3,600.00":step>=9?"USD 110.27":"Nothing"}</strong></div>
+    </section>
+  </div>`}`;
+}
+
+function render(){
+  document.getElementById("view").innerHTML = view==="deal" ? dealView() : view==="portal" ? portalView() : paymentsView();
+  document.getElementById("appbar").hidden = view==="portal";
+  document.querySelectorAll(".nav [data-view]").forEach(b => { if (b.dataset.view===view) b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current"); });
+  document.getElementById("steps").innerHTML = STEPS.map((s,i)=>`<li class="${i<step?"done":i===step?"next":""}">${s.label}</li>`).join("");
+  const nx = document.getElementById("next");
+  nx.disabled = step>=STEPS.length; nx.textContent = step>=STEPS.length ? "All done" : "Next step";
+  document.getElementById("log").innerHTML = step===0 ? '<p class="sub">Nothing yet. Start with step 1.</p>' :
+    LOG.slice(0,step).map((e,i)=>({e,i})).reverse().map(({e,i})=>`<div class="entry${i===justDone?" flash":""}"><div class="entry-h"><span>${i+1}. ${e.title}</span><span class="who ${e.who}">${e.who==="v"?"DwellOS → Verto":"DwellOS"}</span></div><p>${e.text}</p><pre>${e.code}</pre></div>`).join("");
+}
+function go(i){
+  if (i!==step) return;
+  justDone = step; step++; view = STEPS[step-1].view;
+  if (step===8) { rate = 128.95; left = 60; }
+  if (step===9) rate = 128.95;
+  render();
+  if (window.innerWidth>1100) window.scrollTo({top:0,behavior:"smooth"});
+}
+document.addEventListener("click", e => {
+  const g = e.target.closest("[data-go]"); if (g && !g.disabled) return go(+g.dataset.go);
+  const v = e.target.closest("[data-view]"); if (v) { view = v.dataset.view; justDone=-1; render(); }
+});
+document.addEventListener("change", e => { if (e.target.id==="auto") { auto = e.target.checked; render(); return; } const c = e.target.dataset && e.target.dataset.cur; if (c) { picked[c] = e.target.checked; if (!Object.values(picked).some(Boolean)) { picked[c]=true; e.target.checked=true; } } });
+document.getElementById("next").addEventListener("click", () => go(step));
+document.getElementById("reset").addEventListener("click", () => { step=0; view="deal"; justDone=-1; picked={KES:true,USD:true,GBP:false,EUR:false}; render(); });
+
+// The portal's live quote: a new Verto rate every 30 seconds.
+setInterval(() => {
+  if (view!=="portal") return;
+  const span = step===8 ? 60 : 30;
+  left = left<=1 ? span : Math.min(left, span)-1;
+  if (left===span) rate = +(128.95 + (Math.random()-0.5)*0.4).toFixed(2);
+  const r = document.getElementById("q-rate"), u = document.getElementById("q-usd"), g = document.getElementById("q-ring"), l = document.getElementById("q-left");
+  const usd = Math.ceil(450000/rate*100)/100;
+  if (r) r.textContent = `1 USD = KES ${rate.toFixed(2)} · ${step===8?"this price holds for":"new rate in"} ${left}s`;
+  if (u) u.textContent = fmt("USD", usd);
+  if (l) l.textContent = `USD ${(3600-usd).toFixed(2)} will stay in your wallet.`;
+  if (g) g.style.setProperty("--pct", (left/span*100)+"%");
+}, 1000);
+
+// Local screenshot mode: ?step=N&view=deal|payments&clean
+const q = new URLSearchParams(location.search);
+if (q.has("step")) step = Math.max(0, Math.min(STEPS.length, +q.get("step")));
+if (q.get("view")) view = q.get("view");
+if (q.has("clean")) document.body.classList.add("clean");
+if (step===8) left = 52;
+if (location.hash === "#payments") view = "payments";
+if (location.hash === "#portal") view = "portal";
+render();
+</script>
+
+</body></html>
